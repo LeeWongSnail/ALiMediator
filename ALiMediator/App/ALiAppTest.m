@@ -14,12 +14,6 @@
 
 static UIWindow *AlertView;
 
-@interface ALiAppTest () <UIAlertViewDelegate>
-
-@property (nonatomic, strong) void (^checkBlock)();
-
-@end
-
 @implementation ALiAppTest
 
 - (void)startTestAppWithParams:(NSDictionary *)aParams
@@ -98,19 +92,26 @@ static UIWindow *AlertView;
 {
     NSString *title = aParam[kTitle];
     NSString *msg = aParam[kMessage];
-    self.checkBlock = aParam[kCheckBlock];
+    void (^checkBlock)() = aParam[kCheckBlock];
     
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:msg delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-    [alert show];
+    UIAlertAction *confirm = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        if (checkBlock) {
+            checkBlock();
+        }
+    }];
+    
+    
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        
+    }];
+    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:msg preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:cancel];
+    [alertController addAction:confirm];
+    
+    [self.navigationController presentViewController:alertController animated:YES completion:nil];
 }
 
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex == 1 && self.checkBlock) {
-        self.checkBlock();
-    }
-}
 
 
 @end
