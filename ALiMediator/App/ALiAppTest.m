@@ -35,6 +35,8 @@ static UIWindow *AlertView;
         case ALiAppTestTypeAlertView:
             [self popAlertView:aParams];
             break;
+        case ALiAppTestTypeActionSheet:
+            [self popActionSheet:aParams];
         default:
             break;
     }
@@ -112,6 +114,34 @@ static UIWindow *AlertView;
     [self.navigationController presentViewController:alertController animated:YES completion:nil];
 }
 
-
+- (void)popActionSheet:(NSDictionary *)aParam
+{
+    void (^checkBlock)() = aParam[kCheckBlock];
+    void (^destroyBlock)() = aParam[kDestoryBlock];
+    
+    UIAlertAction *confirm = [UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        if (checkBlock) {
+            checkBlock();
+        }
+    }];
+    
+    UIAlertAction *destroy = [UIAlertAction actionWithTitle:@"销毁" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+        if (destroyBlock) {
+            destroyBlock();
+        }
+    }];
+    
+    
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        
+    }];
+    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    [alertController addAction:cancel];
+    [alertController addAction:confirm];
+    [alertController addAction:destroy];
+    
+    [self.navigationController presentViewController:alertController animated:YES completion:nil];
+}
 
 @end

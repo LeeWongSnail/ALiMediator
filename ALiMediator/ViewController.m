@@ -29,6 +29,16 @@
             NSLog(@"点点点");
         };
         [[ALiMediator sharedInstance] startTestApp:ALiAppTestTypeAlertView params:@{kTitle:@"消息",kMessage:@"确认删除",kCheckBlock:checkBlock}];
+    } else if (indexPath.row == 4) {
+        void (^checkBlock)() = ^(){
+            NSLog(@"确定");
+        };
+        
+        void (^destoryBlock)() = ^(){
+            NSLog(@"销毁");
+        };
+        
+        [[ALiMediator sharedInstance] startTestApp:ALiAppTestTypeActionSheet params:@{kCheckBlock:checkBlock,kDestoryBlock:destoryBlock}];
     }
 }
 

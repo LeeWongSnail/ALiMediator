@@ -12,6 +12,7 @@ typedef NS_ENUM(NSUInteger,ALiAppTestType){
     ALiAppTestTypeSecond,
     ALiAppTestTypeThird,
     ALiAppTestTypeAlertView,
+    ALiAppTestTypeActionSheet,
 };
 
 
@@ -24,5 +25,7 @@ typedef NS_ENUM(NSUInteger,ALiAppTestType){
 #define kNav @"kNav"
 
 #define kCheckBlock @"kCheckBlock"
+
+#define kDestoryBlock @"kDestoryBlock"
 
 #define kMessage @"kMessage"
