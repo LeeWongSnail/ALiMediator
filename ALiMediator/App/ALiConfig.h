@@ -19,3 +19,5 @@ typedef NS_ENUM(NSUInteger,ALiAppTestType){
 #define kImageName @"kImageName"
 
 #define kTitle @"kTitle"
+
+#define kNav @"kNav"

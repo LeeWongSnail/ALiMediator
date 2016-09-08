@@ -12,15 +12,14 @@
 #import "ThirdViewController.h"
 #import "ViewController.h"
 
+static UIWindow *AlertView;
+
 @implementation ALiAppTest
 
 - (void)startTestAppWithParams:(NSDictionary *)aParams
 {
     NSInteger type = [[aParams objectForKey:@"des"] integerValue];
     switch (type) {
-        case ALiAppTestTypeMain:
-            [self gotoTestMainVC:aParams];
-            break;
         case ALiAppTestTypeFirst:
             [self gotoFirstVC:aParams];
             break;
@@ -36,30 +35,45 @@
     }
 }
 
-- (void)gotoTestMainVC:(NSDictionary *)aParam
-{
-    ViewController *vc = [[ViewController alloc] init];
-    [self.navigationController pushViewController:vc animated:YES];
-}
 
 - (void)gotoFirstVC:(NSDictionary *)aParam
 {
     FirstViewController *vc = [[FirstViewController alloc] init];
-    [self.navigationController presentViewController:vc animated:YES completion:nil];
+
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)gotoSecondVC:(NSDictionary *)aParam
 {
     SecondViewController *vc = [[SecondViewController alloc] init];
     vc.imageName = aParam[kImageName];
-    [self.navigationController pushViewController:vc animated:YES];
+    [self.navigationController presentViewController:vc animated:YES completion:nil];
 }
 
 - (void)gotoThirdVC:(NSDictionary *)aParam
 {
+    UINavigationController *nav = aParam[kNav];
+    
     ThirdViewController *vc = [[ThirdViewController alloc] init];
-    vc.title = aParam[kTitle];
-    [self.navigationController presentViewController:vc animated:YES completion:nil];
+    vc.navigationController = nav;
+    
+    UIWindow *window = [[UIWindow alloc] initWithFrame:(CGRect) {{0.f, 0.f}, [[UIScreen mainScreen] bounds].size}];
+    window.backgroundColor = [UIColor clearColor];
+    window.windowLevel = UIWindowLevelNormal;
+    window.alpha = 1.;
+    window.hidden = NO;
+    window.rootViewController = vc;
+    vc.view.frame = window.bounds;
+    AlertView = window;
+}
+
+
++ (void)dismissPopView
+{
+    AlertView.hidden = YES;
+    [AlertView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    [AlertView removeFromSuperview];
+    AlertView = nil;
 }
 
 

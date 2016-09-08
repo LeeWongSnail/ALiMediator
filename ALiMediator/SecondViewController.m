@@ -7,6 +7,7 @@
 //
 
 #import "SecondViewController.h"
+#import "ALiMediator+Test.h"
 
 @interface SecondViewController ()
 
@@ -23,6 +24,8 @@
     imageV.frame = CGRectMake(0, 0, 100, 100);
     imageV.center = self.view.center;
     [self.view addSubview:imageV];
+    imageV.userInteractionEnabled = YES;
+    [imageV addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageTaped:)]];
     
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setTitle:@"返回" forState:UIControlStateNormal];
@@ -30,8 +33,35 @@
     btn.frame = CGRectMake(150, [UIScreen mainScreen].bounds.size.height-100, 80, 30);
     btn.layer.cornerRadius = 5;
     [self.view addSubview:btn];
-    [btn addTarget:self action:@selector(dismissViewControllerAnimated:completion:) forControlEvents:UIControlEventTouchUpInside];
+    [btn addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
     
+}
+
+- (void)imageTaped:(UIGestureRecognizer *)gesture
+{
+    if (gesture.state == UIGestureRecognizerStateBegan) {
+        [[ALiMediator sharedInstance] startTestApp:ALiAppTestTypeThird params:@{kTitle:@"我是最后一个控制器"}];
+    }
+}
+
+- (void)back
+{
+    if (self.navigationController.viewControllers.count > 1)
+    {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    else
+    {
+        if (self.navigationController) {
+            [self.navigationController dismissViewControllerAnimated:YES completion:^{
+                
+            }];
+        } else {
+            [self dismissViewControllerAnimated:YES completion:^{
+                
+            }];
+        }
+    }
 }
 
 - (void)didReceiveMemoryWarning {

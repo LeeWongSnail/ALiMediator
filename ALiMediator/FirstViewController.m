@@ -29,11 +29,28 @@
     [self.view addSubview:btn];
     
     [btn addTarget:self action:@selector(handleJump) forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleDone target:self action:@selector(back)];
 }
 
 - (void)handleJump
 {
     [[ALiMediator sharedInstance] startTestApp:ALiAppTestTypeSecond params:@{kImageName:@"shengcheng"}];
+}
+
+- (void)back
+{
+    if (self.navigationController.viewControllers.count > 1)
+    {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    else
+    {
+        [self.navigationController dismissViewControllerAnimated:YES completion:^{
+            
+        }];
+    }
 }
 
 - (void)didReceiveMemoryWarning {

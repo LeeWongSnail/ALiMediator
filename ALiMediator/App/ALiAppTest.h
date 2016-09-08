@@ -18,4 +18,6 @@
  */
 - (void)startTestAppWithParams:(NSDictionary *)aParams;
 
+
++ (void)dismissPopView;
 @end

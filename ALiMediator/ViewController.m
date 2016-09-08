@@ -15,9 +15,18 @@
 
 @implementation ViewController
 
-- (IBAction)FistClick:(id)sender {
-    [[ALiMediator sharedInstance] startTestApp:ALiAppTestTypeFirst params:nil];
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row == 0) {
+        [[ALiMediator sharedInstance] startTestApp:ALiAppTestTypeFirst params:nil];
+    } else if (indexPath.row == 1) {
+        [[ALiMediator sharedInstance] startTestApp:ALiAppTestTypeSecond params:@{kImageName:@"shengcheng"}];
+    } else if (indexPath.row == 2) {
+        [[ALiMediator sharedInstance] startTestApp:ALiAppTestTypeThird params:@{kNav:self.navigationController}];
+    }
 }
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];

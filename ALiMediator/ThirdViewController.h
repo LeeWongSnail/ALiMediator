@@ -10,6 +10,6 @@
 
 @interface ThirdViewController : UIViewController
 
-@property (nonatomic, strong) NSString *title;
+@property (nonatomic, strong) UINavigationController *navigationController;
 
 @end

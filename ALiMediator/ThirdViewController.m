@@ -7,31 +7,69 @@
 //
 
 #import "ThirdViewController.h"
-
+#import "ALiMediator+Test.h"
+#import "ALiAppTest.h"
 @interface ThirdViewController ()
+
+
 
 @end
 
 @implementation ThirdViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    self.view.backgroundColor = [UIColor whiteColor];
-    UILabel *label = [[UILabel alloc] init];
-    label.text = self.title;
-    label.frame = CGRectMake(0, 0, 100, 100);
-    label.center = self.view.center;
-    [self.view addSubview:label];
+- (void)configUI
+{
+    self.view.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.8];
+    
+    UIView *contentView = [[UIView alloc] init];
+    contentView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:contentView];
+    contentView.frame = CGRectMake(0, 0, 250, 250);
+    contentView.center = self.view.center;
+    
     
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setTitle:@"返回" forState:UIControlStateNormal];
-    [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    btn.frame = CGRectMake(150, [UIScreen mainScreen].bounds.size.height-100, 80, 30);
-    btn.layer.cornerRadius = 5;
-    [self.view addSubview:btn];
-    [btn addTarget:self action:@selector(dismissViewControllerAnimated:completion:) forControlEvents:UIControlEventTouchUpInside];
+    [btn setTitle:@"需要跳转" forState:UIControlStateNormal];
+    [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [btn setBackgroundColor:[UIColor greenColor]];
+    [contentView addSubview:btn];
+    btn.frame = CGRectMake(85, 110, 80, 40);
+    btn.layer.cornerRadius = 10;
+    [btn addTarget:self action:@selector(handleJump) forControlEvents:UIControlEventTouchUpInside];
     
+    [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)]];
+}
+
+
+- (void)handleTap:(UIGestureRecognizer *)gesture
+{
+    if (gesture.state == UIGestureRecognizerStateEnded) {
+        [ALiAppTest dismissPopView];
+    }
+}
+
+- (void)handleJump
+{
+    [[ALiMediator sharedInstance] startTestApp:ALiAppTestTypeMain params:nil];
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [self configUI];
+}
+
+- (void)back
+{
+    if (self.navigationController.viewControllers.count > 1)
+    {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    else
+    {
+        [self.navigationController dismissViewControllerAnimated:YES completion:^{
+            
+        }];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
