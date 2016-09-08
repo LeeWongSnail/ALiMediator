@@ -14,12 +14,21 @@
 
 static UIWindow *AlertView;
 
+@interface ALiAppTest () <UIAlertViewDelegate>
+
+@property (nonatomic, strong) void (^checkBlock)();
+
+@end
+
 @implementation ALiAppTest
 
 - (void)startTestAppWithParams:(NSDictionary *)aParams
 {
     NSInteger type = [[aParams objectForKey:@"des"] integerValue];
     switch (type) {
+        case ALiAppTestTypeMain:
+            [self gotoMainVC:aParams];
+            break;
         case ALiAppTestTypeFirst:
             [self gotoFirstVC:aParams];
             break;
@@ -29,10 +38,19 @@ static UIWindow *AlertView;
         case ALiAppTestTypeThird:
             [self gotoThirdVC:aParams];
             break;
-            
+        case ALiAppTestTypeAlertView:
+            [self popAlertView:aParams];
+            break;
         default:
             break;
     }
+}
+
+- (void)gotoMainVC:(NSDictionary *)aParam
+{
+    ViewController *vc = [[ViewController alloc] init];
+    
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 
@@ -74,6 +92,24 @@ static UIWindow *AlertView;
     [AlertView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     [AlertView removeFromSuperview];
     AlertView = nil;
+}
+
+- (void)popAlertView:(NSDictionary *)aParam
+{
+    NSString *title = aParam[kTitle];
+    NSString *msg = aParam[kMessage];
+    self.checkBlock = aParam[kCheckBlock];
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:msg delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    [alert show];
+}
+
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1 && self.checkBlock) {
+        self.checkBlock();
+    }
 }
 
 

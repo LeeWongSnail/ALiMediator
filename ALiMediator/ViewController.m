@@ -24,6 +24,11 @@
         [[ALiMediator sharedInstance] startTestApp:ALiAppTestTypeSecond params:@{kImageName:@"shengcheng"}];
     } else if (indexPath.row == 2) {
         [[ALiMediator sharedInstance] startTestApp:ALiAppTestTypeThird params:@{kNav:self.navigationController}];
+    } else if (indexPath.row == 3) {
+        void (^checkBlock)() = ^(){
+            NSLog(@"点点点");
+        };
+        [[ALiMediator sharedInstance] startTestApp:ALiAppTestTypeAlertView params:@{kTitle:@"消息",kMessage:@"确认删除",kCheckBlock:checkBlock}];
     }
 }
 

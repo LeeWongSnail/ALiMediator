@@ -50,6 +50,7 @@
 
 - (void)handleJump
 {
+    [ALiAppTest dismissPopView];
     [[ALiMediator sharedInstance] startTestApp:ALiAppTestTypeMain params:nil];
 }
 

@@ -492,6 +492,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = ALiMediator/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.msb.ALiMediator;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -503,6 +504,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = ALiMediator/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.msb.ALiMediator;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -574,6 +576,7 @@
 				EB2D36251D80223200430C1A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		EB2D36261D80223200430C1A /* Build configuration list for PBXNativeTarget "ALiMediatorTests" */ = {
 			isa = XCConfigurationList;
@@ -582,6 +585,7 @@
 				EB2D36281D80223200430C1A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		EB2D36291D80223200430C1A /* Build configuration list for PBXNativeTarget "ALiMediatorUITests" */ = {
 			isa = XCConfigurationList;
@@ -590,6 +594,7 @@
 				EB2D362B1D80223200430C1A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
